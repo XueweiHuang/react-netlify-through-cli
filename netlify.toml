@@ -5,4 +5,4 @@
   publish = "build"
 
   # Default build command.
-  # command = "echo 'default context'"
+  command = "npm run-script build"
