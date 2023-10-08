@@ -18,7 +18,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prebuild": "echo $MY_KEY"
-    // "postinstall": "npm --prefix ./functions/my-function i && npm --prefix ./functions/other-function i"
+
   },
   "eslintConfig": {
     "extends": [
