@@ -16,7 +16,7 @@ function App() {
           rel="noopener noreferrer"
         >
           Learn React, I dont know how to learn it static
-          here is my environment variable: {process.env.REACT_APP_MY_KEY}
+          here is my environment variable: {process.env.REACT_APP_MY_KEY} , {process.env.MY_KEY}
         </a>
       </header>
     </div>
