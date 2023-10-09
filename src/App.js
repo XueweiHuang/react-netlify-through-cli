@@ -89,7 +89,7 @@ const handleSubmit=e=>{
     //     </form>
     // </div>
     // netlify form
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} netlify>
     <input type="hidden" name="form-name" value="contact" />
     <p>
       <label>Your Name: <input type="text" name="name"/></label>
