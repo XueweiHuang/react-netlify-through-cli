@@ -2,6 +2,13 @@
 import './App.css';
 // import { useEffect, useState } from 'react';
 
+const encode = (data) => {
+  return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+}
+
+
 function App() {
 
   // const [value, setValue]=useState("");
@@ -23,31 +30,31 @@ function App() {
   //   .then(x=>x.json())
   //   .then(data=>console.log(data))
   // }, [])
-// const handleSubmit=e=>{
-//       e.preventDefault();
-//       const form=e.target;
-//       fetch("/", {
-//         method: "POST",
-//         body: encode({
-//           "formname":"contact",
-//           name: form.name.value,
-//           email: form.email.value
+ 
+
+
+const handleSubmit=e=>{
+      e.preventDefault();
+      const form=e.target;
+      fetch("/", {
+        method: "POST",
+        body: encode({
+          "formname":"contact",
+          name: form.name.value,
+          email: form.email.value
+        })})
+          .then(()=>{
+            alert("Success")
+          })
+          .catch(error=>alert(error))
 
 
 
-//         })
-//           .then(()=>{
-//             alert("Success")
-//           })
-//           .catch(error=>alert(error))
+      
 
 
 
-//       })
-
-
-
-// };
+};
   return (
     // <div className="App">
     //   <header className="App-header">
@@ -82,7 +89,7 @@ function App() {
     //     </form>
     // </div>
     // netlify form
-    <form name="contact" method="post">
+    <form onSubmit={handleSubmit}>
     <input type="hidden" name="form-name" value="contact" />
     <p>
       <label>Your Name: <input type="text" name="name"/></label>
