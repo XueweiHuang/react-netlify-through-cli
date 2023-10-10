@@ -1,17 +1,26 @@
-// import logo from './logo.svg';
+import logo from './logo.svg';
 import './App.css';
-// import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+
 
 const encode = (data) => {
-  return Object.keys(data)
-      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-      .join("&");
+   const formData=new FormData()
+   for (const key of Object.keys(data)){
+    formData.append(key,data[key])
+   }
+   return formData
 }
+
 
 
 function App() {
 
-  // const [value, setValue]=useState("");
+
+  
+
+
+  const [value, setValue]=useState("");
   // useEffect (()=>{
   //   fetch(".netlify/functions/note-fetch-test")
   //   .then(x=>x.json())
@@ -25,36 +34,33 @@ function App() {
   // }, [])
 
 
-  // useEffect (()=>{
-  //   fetch(".netlify/functions/Hello-TypeScript")
-  //   .then(x=>x.json())
-  //   .then(data=>console.log(data))
-  // }, [])
- 
-
-
-const handleSubmit=e=>{
-      e.preventDefault();
-      const form=e.target;
-      fetch("/", {
-        method: "POST",
-        body: encode({
-          "formname":"contact",
-          name: form.name.value,
-          email: form.email.value
-        })})
-          .then(()=>{
-            alert("Success")
-          })
-          .catch(error=>alert(error))
+  useEffect (()=>{
+    fetch(".netlify/functions/Hello-TypeScript")
+    .then(x=>x.json())
+    .then(data=>console.log(data))
+  }, [])
+  const handleSubmit=e=>{
+    e.preventDefault();
+    const form=e.target;
+    fetch("/",{
+      method: "POST",
+      body: encode({
+        "form-name": "contact",
+        name: form.name.value,
+        email: form.email.value
+      })
+    })
+    .then(()=>alert("success"))
+    .catch(error=>alert(error));
 
 
 
-      
+
+  };
 
 
 
-};
+
   return (
     // <div className="App">
     //   <header className="App-header">
@@ -89,21 +95,21 @@ const handleSubmit=e=>{
     //     </form>
     // </div>
     // netlify form
-    <form onSubmit={handleSubmit} netlify>
-    <input type="hidden" name="form-name" value="contact" />
-    <p>
-      <label>Your Name: <input type="text" name="name"/></label>
-    </p>
-    <p>
-      <label>Your Email: <input type="email" name="email"/></label>
-    </p>
-    <p>
-      <label>Message: <textarea name="message"></textarea></label>
-    </p>
-    <p>
-      <button type="submit">Send</button>
-    </p>
-  </form>
+    <form  onSubmit={handleSubmit} >
+          <input type="hidden" name="form-name" value="contact" />
+          <p>
+            <label>Your Name: <input type="text" name="name"/></label>
+          </p>
+          <p>
+            <label>Your Email: <input type="email" name="email"/></label>
+          </p>
+          <p>
+            <label>Message: <textarea name="message"></textarea></label>
+          </p>
+          <p>
+            <button type="submit">Send</button>
+          </p>
+        </form>
   );
 }
 
