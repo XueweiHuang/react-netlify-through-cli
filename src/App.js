@@ -1,8 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
+import netlifyIdentity from 'netlify-identity-widget';
 
 
+netlifyIdentity.init();
 
 const encode = (data) => {
    const formData=new FormData()
@@ -58,8 +60,34 @@ function App() {
 
   };
 
+const openWidget=()=>{
+  netlifyIdentity.open('login'); // open the modal to the login tab
+  
+}
 
+const callFunction=()=>{
+  const user=netlifyIdentity.currentUser() 
+  console.log(user)
+  fetch("/.netlify/functions/protected-function-test", user && {
+    headers: {
+      Authorization: "Bearer "+user.token.access_token
+    }
+  })
+  .then(x=>{
+    return x.json()
+  })
+  // .then (data=>{
+  //   // console.log(data)
+  // })
+  .then(res=>{
+    if (res.data==="NOT ALLOWED"){
+      netlifyIdentity.open('login');
 
+    }
+    else 
+      alert(res.data)
+  })
+}
 
   return (
     // <div className="App">
@@ -95,7 +123,9 @@ function App() {
     //     </form>
     // </div>
     // netlify form
-    <form  onSubmit={handleSubmit} >
+  <>
+ 
+  <form  onSubmit={handleSubmit} >
           <input type="hidden" name="form-name" value="contact" />
           <p>
             <label>Your Name: <input type="text" name="name"/></label>
@@ -110,6 +140,13 @@ function App() {
             <button type="submit">Send</button>
           </p>
         </form>
+        <button onClick={openWidget}>Test login</button>
+        <button onClick={callFunction}>{"Call Function"}</button>
+
+  </>
+    
+        
+        
   );
 }
 

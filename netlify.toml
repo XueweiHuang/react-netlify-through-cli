@@ -5,4 +5,5 @@
   publish = "build"
 
   # Default build command.
-  # command = "npm run-script build"
+  command = "npm run-script build"
+  # functions="functions"
